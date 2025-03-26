@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Selection</title>
+    <link rel="stylesheet" href="HrInstructorStyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Load Chart.js -->
+
+</head>
+    <body>
+
+    <!--<img id="pieChart" alt="Pie Chart" style="max-width: 400px;"/>-->
+    <button onclick="loadPlot()">Generate Plot</button>
+    <img id="plotImage" alt="Generated Plot" style="display: block; margin-top: 20px;">
+
+
+
+
+
+        <!--vvvvvvvvvvvvvvvvvvvv INPUT AND COMBOBOX OBJECTS BELOW, Property edit for Textbox/Input and Combobox that shows when searching vvvvvvvvvvvvvvvvvvv-->
+    <form action="HrInstructorDataFetch.php">
+        <div class="input-container">
+            <input type="text" id="FacultyInput" oninput="if(window.facultyOptions) showCombobox('FacultyInput', window.facultyOptions)" placeholder=" ">
+            <label for="FacultyInput">Enter Faculty</label>
+            <div class="combobox" id="FacultyInputCombobox"></div>
+        </div>
+        <br>
+        <div class="input-container">
+            <input type="text" id="ProfessorInput"
+                   oninput="if(window.professorOptions) showCombobox('ProfessorInput', window.professorOptions[document.getElementById('FacultyInput').value] || [])"
+                   placeholder=" ">
+            <label for="ProfessorInput">Enter Professor</label>
+            <div class="combobox" id="ProfessorInputCombobox"></div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="SemesterInput" oninput="showCombobox('SemesterInput', semesterOptions)" placeholder=" ">
+            <label for="SemesterInput">Enter Semester</label>
+            <div class="combobox" id="SemesterInputCombobox"></div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="SchoolYearInput" oninput="showCombobox('SchoolYearInput', schoolYearOptions)" placeholder=" ">
+            <label for="SchoolYearInput">Enter School Year</label>
+            <div class="combobox" id="SchoolYearInputCombobox"></div>
+
+
+        </div>
+
+        <hr>
+        <br>
+        <table style="width:25%; border-collapse: collapse;" border="1">
+            <tr>
+                <th  onclick="columnClicked(1)">Copus 1</th>
+                <th onclick="columnClicked(2)">Copus 2</th>
+                <th onclick="columnClicked(3)">Copus 3</th>
+                <th onclick="columnClicked(4)">Summary</th>
+            </tr>
+
+        </table>
+
+
+
+    </form>
+
+    <div id="modalOverlay" style="display: none;"></div>
+    <div id="infoModal" style="display: none;">
+        <h2 id="modalTitle"></h2>
+        <p id="modalText"></p>
+        <button id="closeBtn">Close</button>
+    </div>
+
+    <hr>
+    <label>Faculty</label><br>
+    <label>Name</label><br>
+    <label>Semester</label><br>
+    <label>School Year</label><br>
+    <br>
+    <hr>
+    <!--^^^^^^^^^^^^^^^^^^^^ INPUT COMBOBOX OBJECTS ABOVE ^^^^^^^^^^^^^^^^^^^^^^^-->
+    <br>
+
+    <!--vvvvvvvvvvvvvvvvvvvvvvv TABLE OBJECT BELOW vvvvvvvvvvvvvvvvvvv-->
+    <div class="table-container">
+
+
+        <table  style="width:50%" >
+            <tr>
+                <th>Students doing</th>
+
+            </tr>
+            <tr>
+                <td>
+                    <canvas id="student_pie_chart" width="400" height="400">  </canvas>
+                </td>
+
+            </tr>
+            <tr>
+                <td>Summary of Evaluation</td>
+            </tr>
+        </table>
+
+        <table style="width:50%">
+            <tr>
+                <th>Instructor's Doing</th>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <canvas id="instructor_pie_chart" width="400" height="400"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td>Summary of Evaluation</td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+    <!--^^^^^^^^^^^^^^^^ TABLE OBJECTS ABOVE ^^^^^^^^^^^^^^^^^^^^^^^^^^-->
+
+    <script src="HrInstructorIndex.js"></script>
+
+    </body>
+</html>

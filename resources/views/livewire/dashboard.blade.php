@@ -146,4 +146,37 @@
             </x-filament::section>
         </section>
     @endif
+    <div>
+
+        <style>
+            .custom-button {
+                transition: all 0.2s ease-in-out;
+            }
+
+            .custom-button:hover {
+                background-color: rgb(16, 185, 129) !important;
+                color: white !important;
+            }
+
+            .ai-response-box {
+                width: 100%;
+                height: 150px;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-top: 10px;
+                resize: none;
+                color: black;
+            }
+        </style>
+
+
+            <h2>AI Evaluation Summary</h2>
+
+            <button class="custom-button" wire:click="fetchAISummary">Generate Summary</button>
+
+            <textarea class="ai-response-box" readonly>{{ $summary }}</textarea>
+        </div>
+
 </div>
+
+

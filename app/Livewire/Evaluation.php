@@ -56,6 +56,7 @@ class Evaluation extends Component implements HasForms, HasTable
             ->columns([
                 \Filament\Tables\Columns\TextColumn::make('courseprof')
                     ->label('Course and Professor')
+<<<<<<< Updated upstream
                     ->default(fn($record): string => $record->course?->name ?? 'N/A')
                     ->description(fn($record): string => $record->professor?->name ?? 'N/A'),
                 \Filament\Tables\Columns\TextColumn::make('roomsubject')
@@ -66,8 +67,24 @@ class Evaluation extends Component implements HasForms, HasTable
                     ->label('Year & Semester')
                     ->default(fn($record): string => $record->semester ?? 'N/A')
                     ->description(fn($record): string => $record->year ?? 'N/A'),
+=======
+                    ->default(fn($record): string => $record->course?->name ?? 'No course')
+                    ->description(fn($record): string => $record->professor?->name ?? 'No professor'),
+
+                \Filament\Tables\Columns\TextColumn::make('roomsubject')
+                    ->label('Room & Subject')
+                    ->default(fn($record): string => $record->room?->name ?? 'No room')
+                    ->description(fn($record): string => $record->subject?->name ?? 'No subject'),
+
+                \Filament\Tables\Columns\TextColumn::make('yearsem')
+                    ->label('Year & Semester')
+                    ->default(fn($record): string => $record->semester ?? 'No semester')
+                    ->description(fn($record): string => $record->year ?? 'No year'),
+
+>>>>>>> Stashed changes
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->date('Y-m-d'),
+
                 \Filament\Tables\Columns\TextColumn::make('updated_at')
                     ->since(),
             ])
@@ -283,6 +300,7 @@ class Evaluation extends Component implements HasForms, HasTable
             ->paginationPageOptions([5, 10, 25, 50])
             ->striped();
     }
+
     public function render()
     {
         return view('livewire.evaluation');

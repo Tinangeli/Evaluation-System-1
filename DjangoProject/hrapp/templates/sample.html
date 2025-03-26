@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Schedule Manager Viewing</h1>
+    <h2>Hello World!</h2>
+
+            <div class="input-container">
+            <input type="text" id="CourseInput" onkeyup="filterCourses()">
+            <label for="CourseInput">Enter Course</label>
+            <div class="combobox" id="CourseCombobox"></div>
+        </div>
+
+               <script>
+
+
+
+             // Load courses safely
+
+            function filterCourses() {
+                let input = document.getElementById("CourseInput");
+                let combobox = document.getElementById("CourseCombobox");
+                let query = input.value.toLowerCase();
+                combobox.innerHTML = "";  // Clear previous results
+
+                if (query.length === 0) {
+                    combobox.style.display = "none"; // Hide when empty
+                    return;
+                }
+
+                let filtered = courses.filter(course => course.toLowerCase().includes(query));
+
+                if (filtered.length === 0) {
+                    combobox.style.display = "none"; // Hide if no matches
+                    return;
+                }
+
+                filtered.forEach(course => {
+                    let option = document.createElement("div");
+                    option.textContent = course;
+                    option.classList.add("combobox-item");
+                    option.onclick = () => {
+                        input.value = course;
+                        combobox.style.display = "none"; // Hide after selection
+                    };
+                    combobox.appendChild(option);
+                });
+
+                combobox.style.display = "block"; // Show dropdown
+
+                // Autocomplete behavior: Fill input with first match
+                input.value = filtered[0];
+            }
+
+            document.getElementById("CourseInput").addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    let firstItem = document.querySelector(".combobox-item");
+                    if (firstItem) {
+                        this.value = firstItem.textContent;
+                        document.getElementById("CourseCombobox").style.display = "none";
+                    }
+                    event.preventDefault();
+                }
+            });
+        </script>
+
+        <style>
+            .combobox {
+                display: none;
+                position: absolute;
+                background: white;
+                border: 1px solid #ccc;
+                max-height: 150px;
+                overflow-y: auto;
+                width: 200px;
+            }
+            .combobox-item {
+                padding: 5px;
+                cursor: pointer;
+            }
+            .combobox-item:hover {
+                background: #f0f0f0;
+            }
+        </style>
+        <br><br>
+    <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Course</th>
+        <th>Professor</th>
+        <th>Subject</th>
+        <th>Room</th>
+        <th>Name</th>
+        <th>Time</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Active</th>
+    </tr>
+    {% for schedule in schedules %}
+    <tr>
+        <td>{{ schedule.id }}</td>
+        <td>{{ schedule.course__name }}</td>
+        <td>{{ schedule.professor__name }}</td>
+        <td>{{ schedule.subject__name }}</td>
+        <td>{{ schedule.room__name }}</td>
+        <td>{{ schedule.name }}</td>
+        <td>{{ schedule.time }}</td>
+        <td>{{ schedule.semester }}</td>
+        <td>{{ schedule.year }}</td>
+        <td>{{ schedule.is_active }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+        <script>
+        let courses = {{ courses|safe }};  // Raw Django variable
+        console.log("Loaded courses (Raw):", courses);  // Debugging output
+
+        // Convert to a proper JSON array
+        if (typeof courses === "string") {
+            try {
+                courses = JSON.parse(courses);
+            } catch (error) {
+                console.error("JSON parsing error:", error);
+            }
+        }
+
+        console.log("Parsed courses:", courses);  // Debugging output
+    </script>
+
+</body>
+</html>

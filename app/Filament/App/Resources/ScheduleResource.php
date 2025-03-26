@@ -131,6 +131,7 @@ class ScheduleResource extends Resource implements HasShieldPermissions
     }
 
     public static function table(Table $table): Table
+<<<<<<< Updated upstream
     {
         return $table
             ->columns([
@@ -194,6 +195,63 @@ class ScheduleResource extends Resource implements HasShieldPermissions
                 ]),
             ]);
     }
+=======
+{
+    return $table
+        ->columns([
+            Tables\Columns\TextColumn::make('course.name')
+                ->sortable()
+                ->description(fn($record): string => $record->room?->name ?? 'No room'),
+            Tables\Columns\TextColumn::make('professor.name')
+                ->sortable()
+                ->description(fn($record): string => $record->subject?->name ?? 'No subject'),
+            Tables\Columns\TextColumn::make('name')
+                ->description(fn($record): string => $record->semester ?? 'No semester'),
+            Tables\Columns\TextColumn::make('time')
+                ->description(fn($record): string => 'Year ' . ($record->year ?? 'No year')),
+            Tables\Columns\IconColumn::make('is_active')
+                ->boolean(),
+            Tables\Columns\TextColumn::make('deleted_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+        ->filters([
+            //
+        ])
+        ->actions([
+            Tables\Actions\ActionGroup::make([
+                Tables\Actions\ViewAction::make()
+                    ->tooltip('View'),
+                Tables\Actions\EditAction::make()
+                    ->tooltip('Edit')
+                    ->color('warning'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Archive')
+                    ->tooltip('Archive')
+                    ->modalHeading('Archive User'),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make()
+                    ->color('secondary'),
+            ])
+                ->icon('heroicon-m-ellipsis-vertical')
+                ->tooltip('Actions')
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
+}
+>>>>>>> Stashed changes
 
     public static function getRelations(): array
     {
